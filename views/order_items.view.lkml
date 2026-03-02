@@ -102,10 +102,13 @@ view: order_items {
     value_format_name: usd
   }
 
-  measure: max_sale_price_in_category {
+  dimension: max_sale_price_in_category {
     description: "Maximum sale price within a product category"
-    type: max
-    sql: ${sale_price} ;;
+    type: number
+    sql: (SELECT MAX(oi2.sale_price)
+          FROM `thelook.order_items` oi2
+          LEFT JOIN `thelook.inventory_items` ii2 ON oi2.inventory_item_id = ii2.id
+          WHERE ii2.product_category = ${inventory_items.product_category}) ;;
     value_format_name: usd
   }
 
