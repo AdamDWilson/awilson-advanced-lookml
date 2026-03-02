@@ -63,6 +63,20 @@ view: orders {
     # hidden: yes
     sql: ${TABLE}.user_id ;;
   }
+  dimension: delivery_time_days {
+    type: number
+    description: "Number of days between order creation and delivery"
+    sql: TIMESTAMP_DIFF(${delivered_raw}, ${created_raw}, DAY) ;;
+  }
+
+  measure: average_delivery_time_ca {
+    type: average
+    description: "Average delivery time in days for orders shipped to California"
+    sql: ${delivery_time_days} ;;
+    filters: [users.state: "California"]
+    value_format_name: decimal_1
+  }
+
   measure: count {
     type: count
     drill_fields: [order_id, users.last_name, users.id, users.first_name, order_items.count]
