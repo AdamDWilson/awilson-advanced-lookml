@@ -74,6 +74,12 @@ view: order_items {
     # hidden: yes
     sql: ${TABLE}.user_id ;;
   }
+  measure: total_sale_price {
+    type: sum
+    sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
