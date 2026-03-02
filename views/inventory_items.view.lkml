@@ -78,6 +78,20 @@ view: inventory_items {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.sold_at ;;
   }
+  measure: total_cost {
+    description: "Total cost of items sold from inventory"
+    type: sum
+    sql: ${cost} ;;
+    value_format_name: usd
+  }
+
+  measure: average_cost {
+    description: "Average cost of an item in inventory"
+    type: average
+    sql: ${cost} ;;
+    value_format_name: usd
+  }
+
   measure: count {
     type: count
     drill_fields: [id, product_name, products.name, products.id, order_items.count]

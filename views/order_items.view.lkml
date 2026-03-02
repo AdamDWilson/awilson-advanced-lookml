@@ -80,6 +80,28 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: average_sale_price {
+    description: "Average sale price of an item sold"
+    type: average
+    sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
+  measure: cumulative_total_sales {
+    description: "Cumulative total sales from items sold (running total)"
+    type: running_total
+    sql: ${total_sale_price} ;;
+    value_format_name: usd
+  }
+
+  measure: total_gross_revenue {
+    description: "Total revenue from completed sales (canceled and returned orders excluded)"
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [status: "-Cancelled, -Returned"]
+    value_format_name: usd
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
