@@ -102,6 +102,13 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: max_sale_price_in_category {
+    description: "Maximum sale price within a product category"
+    type: max
+    sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
