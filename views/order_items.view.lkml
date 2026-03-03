@@ -107,6 +107,21 @@ view: order_items {
     drill_fields: [detail*]
   }
 
+  measure: total_revenue {
+    type: sum
+    sql: ${sale_price} ;;
+    value_format_name: usd
+    drill_fields: [detail*]
+    description: "Sum of sale price across all order items"
+  }
+
+  measure: average_order_value {
+    type: number
+    sql: ${total_revenue} / NULLIF(COUNT(DISTINCT ${order_id}), 0) ;;
+    value_format_name: usd
+    description: "Average revenue per order (Total Revenue / Distinct Orders)"
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
